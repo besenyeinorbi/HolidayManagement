@@ -11,14 +11,15 @@ namespace HolidayManagement.Controllers
     [Authorize]
     public class DashboardController : Controller
     {
-        public UserDetailsRepository UserDetailsRepo = new UserDetailsRepository();
+        public UserDetailsRepository userDetailsRepo = new UserDetailsRepository();
+        public TeamRepository teamRepo = new TeamRepository();
 
         // GET: Dashboard
         public ActionResult Index()
         {
             DashboardViewModel vM = new DashboardViewModel();
-            vM.Users = UserDetailsRepo.GetUsers();        
-
+            vM.Users = userDetailsRepo.GetUsers();
+            vM.Teams = teamRepo.GetTeams();
             return View(vM);
         }
 

@@ -1,8 +1,9 @@
 ﻿function TeamModel(data) {
-    this.Name = null;
+    this.Id = ko.observable(0);
+    this.description = null;
 
     if (data != null) {
-        this.Name = data.Name;
+        this.description = data.Description;
         this.Id = data.Id;
         
 

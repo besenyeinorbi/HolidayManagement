@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using HolidayManagement.Models;
 using HolidayManagement.Repository;
 using HolidayManagement.Repository.Models;
+using System.Collections.Generic;
 
 namespace HolidayManagement.Controllers
 {
@@ -164,7 +165,9 @@ namespace HolidayManagement.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
                     HolidayManagementContext db = new HolidayManagementContext();
+
                     UserDetails nuser = new UserDetails
                     {
                         LastName = model.LastName,
@@ -404,6 +407,17 @@ namespace HolidayManagement.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
+        }
+        public ActionResult CreateUser (UserDetails model)
+        {
+            bool successed = true;
+            List<string> messages = new List<string>();
+            HolidayManagementContext newHolidayManagementContext = new HolidayManagementContext();
+            newHolidayManagementContext.UserDetails.Add(          
+           
+                new UserDetails() { FirstName = model.FirstName, LastName = model.LastName }
+              );
+            return RedirectToAction("Index", "Dashboard");
         }
 
         //

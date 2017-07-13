@@ -290,8 +290,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Dashboard\_MyCalendar.cshtml" />
-    <Content Include="Views\Dashboard\_GroupManager.cshtml" />
+    <Content Include="Views\Dashboard\_GroupManagement.cshtml" />
     <Content Include="Views\Dashboard\_Settings.cshtml" />
+    <Content Include="Views\Dashboard\_Users.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
