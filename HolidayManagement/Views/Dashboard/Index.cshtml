@@ -11,24 +11,25 @@
 </ul>
 <div class="tab-content">
     <div id="Users" class="tab-pane fade in active">
-       @Html.Partial("_Users");
+       @Html.Partial("_Users")
         </div>
                     
     <div id="MyCalendar" class="tab-pane fade">
-        @Html.Partial("_MyCalendar");  
+        @Html.Partial("_MyCalendar")
     </div>
 
     <div id="GroupManagement" class="tab-pane fade">
-        @Html.Partial("_GroupManagement");
+        @Html.Partial("_GroupManagement")
     </div>
 
     <div id="Settings" class="tab-pane fade">
-        @Html.Partial("_Settings");        
+        @Html.Partial("_Settings")        
     </div>
 </div>
 
 <script src="~/Scripts/Dashboard/TeamModel.js"></script>
 <script src="~/Scripts/Dashboard/UserModel.js"></script>
+<script src="~/Scripts/Dashboard/DayModel.js"></script>
 <script src="~/Scripts/Dashboard/DashboardModel.js"></script>
 <script type="text/javascript">
     InitializeDashboardModel(@Html.Raw(Json.Encode(Model)));

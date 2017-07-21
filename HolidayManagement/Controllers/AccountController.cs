@@ -408,18 +408,62 @@ namespace HolidayManagement.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
-        public ActionResult CreateUser (UserDetails model)
-        {
-            bool successed = true;
-            List<string> messages = new List<string>();
-            HolidayManagementContext newHolidayManagementContext = new HolidayManagementContext();
-            newHolidayManagementContext.UserDetails.Add(          
-           
-                new UserDetails() { FirstName = model.FirstName, LastName = model.LastName }
-              );
-            return RedirectToAction("Index", "Dashboard");
-        }
 
+        [HttpPost]
+        public async Task<ActionResult> CreateUser(UserDetails model)
+        {
+            bool successed = false;
+            string messages = "";
+            try
+            {
+                var user = new ApplicationUser { UserName = model.AspUser.Email, Email = model.AspUser.Email };
+                var result = await UserManager.CreateAsync(user, "Password1!");
+                if (result.Succeeded)
+                {
+
+                    HolidayManagementContext newHolidayManagementContext = new HolidayManagementContext();
+
+                    UserDetails newUser = new UserDetails() { FirstName = model.FirstName, LastName = model.LastName, UserId = user.Id, HireDate = model.HireDate, MaxDays = model.MaxDays };
+
+                    newHolidayManagementContext.UserDetails.Add(newUser);
+                    newHolidayManagementContext.SaveChanges();
+
+                    successed = true;
+                }
+                else
+                {
+                    messages = result.Errors.First();
+                }
+            }
+            catch (Exception ex) {
+                messages = ex.Message;
+            }
+
+            return Json(new { successed = successed, messages = messages, newUser = model }, JsonRequestBehavior.DenyGet);
+         }
+
+        [HttpPost]
+        public ActionResult EditUser(UserDetails model)
+        {
+            bool successed = false;
+            string messages = "";
+            try
+            {
+                UserDetailsRepository repo = new UserDetailsRepository();
+
+                successed = repo.EditUserDetail(model);
+
+                if (!successed)
+                    messages = "Email already exists!";                 
+                                   
+            }
+            catch (Exception ex)
+            {
+                messages = ex.Message;
+            }
+
+            return Json(new { successed = successed, messages = messages, newUser = model }, JsonRequestBehavior.DenyGet);
+        }
         //
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]
@@ -474,7 +518,7 @@ namespace HolidayManagement.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Dashboard");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

@@ -58,6 +58,29 @@ namespace HolidayManagement.Migrations
 
             vacationStates.ForEach(vs => context.VacationStates.Add(vs));
             context.SaveChanges();
+
+
+           
+        
+            //var roles = new List<Team>
+            //{
+            //var roleManager new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new HolidayManagementContext()));
+
+            //roleManager.Create(new IdentityRole()
+            //    {
+            //        name "Admin"
+            //    });
+            //roleManager.Create(new IdentityRole()
+            //    {
+            //        name "HR"
+            //    });
+            //roleManager.Create(new IdentityRole()
+            //    {
+            //        name "Employee"
+            //    });
+        
+
         }
     }
-}
+ }
+

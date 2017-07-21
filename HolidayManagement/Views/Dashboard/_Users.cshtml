@@ -16,11 +16,16 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">New User</h4>
-            </div>
-           
+            </div>           
 
             <div class="modal-body">
+                <span data-bind="text : errorMessage"></span>
                 <form>
+                    <input hidden data-bind="value: manageUser.id" />
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="text" class="form-control" id="email" data-bind="value: manageUser.email">
+                    </div>
                     <div class="form-group">
                         <label for="firstName">First Name:</label>
                         <input type="text" class="form-control" id="firstName" data-bind="value: manageUser.firstName">
@@ -38,29 +43,26 @@
                         <input type="text" class="form-control" id="maxdays" data-bind="value: manageUser.maxDays">
                     </div>
                 </form>
-
-
-
-
+                                
                 <p>
-
                     <select data-bind="options: teams,
                              optionsText: 'description',
                              optionsValue:'id',
                              value: manageUser.team.id,
                              optionsCaption: 'Choose...'"class="form-control"></select>
                 </p>
-
             </div>
           
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Create User</button>
-            </div>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                   
+                <button type="button" class="btn btn-primary btn-lg" data-bind="visible: isEditMode(), click: editUser">
+                Edit
+                </button>                          
+                <button type="button" class="btn btn-primary" data-bind="visible: !isEditMode(), click: saveUser">Create</button>
+            </div>            
         </div>
     </div>
 </div>
-
 
 <table>
     <tbody data-bind="foreach: users">
@@ -71,6 +73,11 @@
             <td data-bind="text: hireDate"></td>
             <td data-bind="text: maxDays"></td>
 
+            <td>                
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-bind="click: $root.updateManageUser" data-target="#myModal">
+                    Edit
+                </button>
+            </td>
         </tr>
     </tbody>
 </table>
